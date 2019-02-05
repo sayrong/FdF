@@ -11,6 +11,41 @@
 #include "./libft/libft.h"
 #include "./libft/get_next_line.h"
 
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+
+typedef struct         s_point
+{
+    int x;
+    int y;
+    int z;
+}                      t_point;
+
+typedef struct        s_delta
+{
+    int dx;
+    int dy;
+    int D;
+    int x;
+    int y;
+}                    t_delta;
+
+typedef struct       s_line
+{
+    int x0;
+    int y0;
+    int x1;
+    int y1;
+}                   t_line;
+
+typedef struct      s_img
+{
+    void            *img_ptr;
+    int             *data;
+    int             size_l;
+    int             bpp;
+    int             endian;
+}                   t_img;
 
 typedef struct		s_fdf
 {
@@ -22,6 +57,7 @@ typedef struct		s_fdf
 	int				lines;
 	int				chars;
 	unsigned long	color;
+    t_img           img;
 }					t_fdf;
 
 void ft_printer(t_fdf *fdf);
@@ -31,5 +67,6 @@ int tab_make(t_fdf *fdf);
 int get_cords(t_fdf *fdf);
 int tab_filler(t_fdf *fdf);
 
+void put_line(t_line *l, t_fdf  *fdf);
 
 #endif

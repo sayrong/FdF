@@ -41,5 +41,10 @@ int	main(int ac, char *av[])
 		ft_putendl("error\n");
 	fdf.name = av[1];
 	ft_init(&fdf);
+    draw_init(&fdf);
+    
+    
+    
+    
 	return (0);
 }
