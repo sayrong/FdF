@@ -23,6 +23,7 @@ typedef struct         s_point
     int x;
     int y;
     int z;
+    int color;
 }                      t_point;
 
 typedef struct        s_delta
@@ -36,10 +37,8 @@ typedef struct        s_delta
 
 typedef struct       s_line
 {
-    int x0;
-    int y0;
-    int x1;
-    int y1;
+    t_point         *start;
+    t_point         *end;
 }                   t_line;
 
 typedef struct      s_img
@@ -80,5 +79,7 @@ void setup_mlx(t_fdf *fdf);
 void draw_init(t_fdf *fdf);
 int win_close(void *param);
 void	draw_background(t_fdf *fdf);
+
+t_point *get_simple_point(int x, int y, int z);
 
 #endif

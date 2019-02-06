@@ -20,23 +20,42 @@ void iso(int *x, int *y, int z, t_fdf *fdf)
 	*y = -z + (previous_x + previous_y) * sin(0.523599) + fdf->pad_Y;
 }
 
+int define_color(int z)
+{
+    if (z <= 0)
+        return 0x008000;
+    if (z < 10)
+        return 0x8B4513;
+    return 0xffffff;
+}
+
+t_point *get_simple_point(int x, int y, int z)
+{
+    t_point *new = (t_point*)malloc(sizeof(t_point));
+    new->x = x;
+    new->y= y;
+    new->z = z;
+    new->color = define_color(z);
+    return new;
+}
+
+
 t_point *get_point(int x, int y, int z, t_fdf *fdf)
 {
 	t_point *new = (t_point *)malloc(sizeof(t_point));
 	new->x = x;
 	new->y = y;
 	new->z = z * fdf->xZ;
+    new->color = define_color(z);
 	iso(&(new->x), &(new->y), new->z, fdf);
 	return new;
 }
 
-t_line *get_t_line(int x0, int y0, int x1, int y1)
+t_line *get_t_line(t_point *f, t_point *s)
 {
 	t_line *new = (t_line *)malloc(sizeof(t_line));
-	new->x0 = x0;
-	new->y0 = y0;
-	new->x1 = x1;
-	new->y1 = y1;
+    new->start = f;
+    new->end = s;
 	return new;
 }
 
@@ -55,7 +74,7 @@ void draw_horizontal(t_fdf *fdf)
 			f_point = get_point(t_x, t_y, fdf->map[n][m], fdf);
 			t_x += fdf->offset;
 			s_point = get_point(t_x, t_y, fdf->map[n][m + 1], fdf);
-			put_line(get_t_line(f_point->x, f_point->y, s_point->x, s_point->y), fdf);
+			put_line(get_t_line(f_point, s_point), fdf);
 			m++;
 			free(f_point);
 			free(s_point);
@@ -82,7 +101,7 @@ void draw_vertical(t_fdf *fdf)
 			f_point = get_point(t_x, t_y, fdf->map[n][m], fdf);
 			t_y += fdf->offset;
 			s_point = get_point(t_x, t_y, fdf->map[n + 1][m], fdf);
-			put_line(get_t_line(f_point->x, f_point->y, s_point->x, s_point->y), fdf);
+			put_line(get_t_line(f_point, s_point), fdf);
 			n++;
 		}
 		t_y = 0;
