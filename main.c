@@ -4,15 +4,19 @@
 
 void ft_init(t_fdf *fdf)
 {
+	fdf->offset = 5;
+	fdf->pad_X = WIN_WIDTH / 2;
+	fdf->pad_Y = WIN_HEIGHT / 6;
+	fdf->xZ = 1.5;
 	if (tab_filler(fdf) == -1)
 	{
 		ft_putendl("Error");
 		return ;
 	}
-	ft_printer(fdf);
+//	ft_printer(fdf);
 }
 
-void ft_printer(t_fdf *fdf)
+/* void ft_printer(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -29,7 +33,7 @@ void ft_printer(t_fdf *fdf)
 		printf("\n");
 		i++;
 	}
-}
+} */
 
 int	main(int ac, char *av[])
 {
@@ -41,10 +45,6 @@ int	main(int ac, char *av[])
 		ft_putendl("error\n");
 	fdf.name = av[1];
 	ft_init(&fdf);
-    draw_init(&fdf);
-    
-    
-    
-    
+    setup_mlx(&fdf);
 	return (0);
 }

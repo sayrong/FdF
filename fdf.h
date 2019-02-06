@@ -10,9 +10,13 @@
 #include <stdlib.h>
 #include "./libft/libft.h"
 #include "./libft/get_next_line.h"
-
+#include <math.h>
+#include "keys.h"
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
+# define PADDING 20
+# define OFFSET 5
+# define ZZZ 2
 
 typedef struct         s_point
 {
@@ -57,6 +61,10 @@ typedef struct		s_fdf
 	int				lines;
 	int				chars;
 	unsigned long	color;
+    int				offset;
+	int				xZ;
+	int				pad_X;
+	int				pad_Y;
     t_img           img;
 }					t_fdf;
 
@@ -66,7 +74,11 @@ int line_val(t_fdf *fdf, char *line);
 int tab_make(t_fdf *fdf);
 int get_cords(t_fdf *fdf);
 int tab_filler(t_fdf *fdf);
-
+int key_press(int key, t_fdf *fdf);
 void put_line(t_line *l, t_fdf  *fdf);
+void setup_mlx(t_fdf *fdf);
+void draw_init(t_fdf *fdf);
+int win_close(void *param);
+void	draw_background(t_fdf *fdf);
 
 #endif

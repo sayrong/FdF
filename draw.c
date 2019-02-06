@@ -15,7 +15,7 @@ int ft_abs(int a) {
 void ft_swap(int *a, int *b)
 {
     int tmp;
-    
+
     tmp = *a;
     *a = *b;
     *b = tmp;
@@ -31,7 +31,7 @@ void put_line_low(t_line *l, t_fdf  *fdf)
 {
     t_delta new;
     int yi;
-    
+
     new.dx = l->x1 - l->x0;
     new.dy = l->y1 - l->y0;
     yi = 1;
@@ -45,7 +45,8 @@ void put_line_low(t_line *l, t_fdf  *fdf)
     new.y = l->y0;
     while (new.x <= l->x1)
     {
-        fdf->img.data[new.y * WIN_WIDTH + new.x] = 0xFFFFFF;
+        if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0 && new.y > 0)
+			fdf->img.data[new.y * WIN_WIDTH + new.x] = 0xFFFFFF;
         if (new.D > 0)
         {
             new.y += yi;
@@ -60,7 +61,7 @@ void put_line_high(t_line *l, t_fdf  *fdf)
 {
     t_delta new;
     int xi;
-    
+
     new.dx = l->x1 - l->x0;
     new.dy = l->y1 - l->y0;
     xi = 1;
@@ -74,7 +75,8 @@ void put_line_high(t_line *l, t_fdf  *fdf)
     new.y = l->y0;
     while (new.y <= l->y1)
     {
-        fdf->img.data[new.y * WIN_WIDTH + new.x] = 0xFFFFFF;
+		if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0  && new.y > 0)
+        	fdf->img.data[new.y * WIN_WIDTH + new.x] = 0xFFFFFF;
         if (new.D > 0)
         {
             new.x += xi;
@@ -98,5 +100,5 @@ void put_line(t_line *l, t_fdf  *fdf)
             swap_points(l);
         put_line_high(l, fdf);
     }
-    
+
 }
