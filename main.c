@@ -8,6 +8,9 @@ void ft_init(t_fdf *fdf)
 	fdf->pad_X = WIN_WIDTH / 2;
 	fdf->pad_Y = WIN_HEIGHT / 6;
 	fdf->xZ = 1.5;
+	fdf->a = 0;
+	fdf->b = 0;
+	fdf->c = 0;
 	if (tab_filler(fdf) == -1)
 	{
 		ft_putendl("Error");

@@ -64,6 +64,9 @@ typedef struct		s_fdf
 	int				xZ;
 	int				pad_X;
 	int				pad_Y;
+    double          a;
+    double          b;
+    double          c;
     t_img           img;
 }					t_fdf;
 
@@ -79,7 +82,6 @@ void setup_mlx(t_fdf *fdf);
 void draw_init(t_fdf *fdf);
 int win_close(void *param);
 void	draw_background(t_fdf *fdf);
-
 t_point *get_simple_point(int x, int y, int z);
 
 #endif

@@ -9,5 +9,8 @@
 # define KP_6						0xff98	//88
 # define KP_8						0xff97	//91
 # define KP_2						0xff99	//84
+# define KB_W						119
+# define KB_S						115
+# define KB_H						104
 
 # endif

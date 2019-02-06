@@ -30,10 +30,28 @@ int moving(int key, t_fdf *fdf)
 		fdf->pad_X -= PADDING;
 	return (0);
 }
+
+void	rotate(int key, t_fdf *fdf)
+{
+	if (key == KP_2)
+		fdf->a += 0.05;
+	else if (key == KP_8)
+		fdf->a -= 0.05;
+	else if (key == KP_4)
+		fdf->b-= 0.05;
+	else if (key == KP_6)
+		fdf->b += 0.05;
+	else if (key == KB_W)
+		fdf->c += 0.05;
+	else if (key == KB_S)
+		fdf->c -= 0.05;
+}
+
 int key_press(int key, t_fdf *fdf)
 {
 	zoom(key, fdf);
 	moving(key, fdf);
+	rotate(key, fdf);
 	mlx_destroy_image(fdf->mlx, fdf->img.img_ptr);
 	draw_init(fdf);
 	return (0);
