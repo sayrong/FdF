@@ -72,7 +72,7 @@ t_point *get_point(int x, int y, int z, t_fdf *fdf)
 	t_point *new = (t_point *)malloc(sizeof(t_point));
 	new->x = x;
 	new->y = y;
-	new->z = z * fdf->xZ;
+	new->z = z * fdf->xZ + fdf->offset;
 	rotate_x(&new->y, &new->z, fdf->a);
 	rotate_y(&new->x, &new->z, fdf->b);
 	rotate_z(&new->x, &new->y, fdf->c);
