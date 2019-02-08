@@ -16,7 +16,7 @@
 # define WIN_HEIGHT 600
 # define PADDING 20
 # define OFFSET 5
-# define ZZZ 2
+# define ZZZ 1
 
 typedef struct         s_point
 {

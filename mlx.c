@@ -16,7 +16,7 @@ void iso(int *x, int *y, int z, t_fdf *fdf)
 	previous_x = *x;
 	previous_y = *y;
 	*x = (previous_x - previous_y) * cos(0.523599) + fdf->pad_X;
-	*y = -z + (previous_x + previous_y) * sin(0.523599) + fdf->pad_Y;
+	*y = -(z + fdf->offset) + (previous_x + previous_y) * sin(0.523599) + fdf->pad_Y;
 }
 
 int define_color(int z)
@@ -26,16 +26,6 @@ int define_color(int z)
     if (z < 10)
         return 0x8B4513;
     return 0xffffff;
-}
-
-t_point *get_simple_point(int x, int y, int z)
-{
-    t_point *new = (t_point*)malloc(sizeof(t_point));
-    new->x = x;
-    new->y= y;
-    new->z = z;
-    new->color = define_color(z);
-    return new;
 }
 
 void	rotate_x(int *y, int *z, double a)
@@ -67,16 +57,29 @@ void	rotate_z(int *x, int *y, double c)
 	*y = previous_x * sin(c) + previous_y * cos(c);
 }
 
-t_point *get_point(int x, int y, int z, t_fdf *fdf)
+t_point *get_simple_point(int x, int y, int z)
+{
+    t_point *new = (t_point*)malloc(sizeof(t_point));
+    new->x = x;
+    new->y= y;
+    new->z = z;
+    new->color = define_color(z);
+    return new;
+}
+
+t_point *get_point(int x, int y, t_fdf *fdf)
 {
 	t_point *new = (t_point *)malloc(sizeof(t_point));
 	new->x = x;
 	new->y = y;
-	new->z = z * fdf->xZ + fdf->offset;
+	new->z = fdf->map[fdf->n][fdf->m]*fdf->xZ;
 	rotate_x(&new->y, &new->z, fdf->a);
 	rotate_y(&new->x, &new->z, fdf->b);
 	rotate_z(&new->x, &new->y, fdf->c);
-    new->color = define_color(z);
+    if (!(fdf->color[fdf->n][fdf->m]))
+		new->color = define_color(fdf->map[fdf->n][fdf->m]);
+	else
+		new->color = fdf->color[fdf->n][fdf->m];
 	iso(&(new->x), &(new->y), new->z, fdf);
 	return new;
 }
@@ -101,10 +104,10 @@ void draw_horizontal(t_fdf *fdf)
 		fdf->m = 0;
 		while (fdf->m != fdf->chars - 1)
 		{
-			f_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
+			f_point = get_point(t_x, t_y, fdf);
 			t_x += fdf->offset;
 			fdf->m++;
-			s_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
+			s_point = get_point(t_x, t_y, fdf);
 			put_line(get_t_line(f_point, s_point), fdf);
 			free(f_point);
 			free(s_point);
@@ -127,10 +130,10 @@ void draw_vertical(t_fdf *fdf)
 		fdf->n = 0;
 		while (fdf->n != fdf->lines - 1)
 		{
-			f_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
+			f_point = get_point(t_x, t_y, fdf);
 			t_y += fdf->offset;
 			fdf->n++;
-			s_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
+			s_point = get_point(t_x, t_y, fdf);
 			put_line(get_t_line(f_point, s_point), fdf);
 			free(f_point);
 			free(s_point);
