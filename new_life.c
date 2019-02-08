@@ -53,6 +53,9 @@ int ft_put_sizes(t_fdf *fdf)
 		if (line_val(fdf, line) == -1)
 			return (-1);
 	}
+	fdf->offset = WIN_HEIGHT / (2 * fdf->lines) + 2;
+	fdf->pad_X = WIN_WIDTH / 2;
+	fdf->pad_Y = WIN_HEIGHT / 6;
 	return (0);
 }
 
