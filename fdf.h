@@ -64,6 +64,8 @@ typedef struct		s_fdf
 	int				xZ;
 	int				pad_X;
 	int				pad_Y;
+    int             n;
+    int             m;
     double          a;
     double          b;
     double          c;

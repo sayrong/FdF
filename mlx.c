@@ -93,25 +93,25 @@ void draw_horizontal(t_fdf *fdf)
 {
 	int t_x = 0;
 	int t_y = 0;
-	int n = 0;
+	fdf->n = 0;
 	t_point *f_point;
 	t_point *s_point;
-	while (n != fdf->lines)
+	while (fdf->n != fdf->lines)
 	{
-		int m = 0;
-		while (m != fdf->chars - 1)
+		fdf->m = 0;
+		while (fdf->m != fdf->chars - 1)
 		{
-			f_point = get_point(t_x, t_y, fdf->map[n][m], fdf);
+			f_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
 			t_x += fdf->offset;
-			s_point = get_point(t_x, t_y, fdf->map[n][m + 1], fdf);
+			fdf->m++;
+			s_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
 			put_line(get_t_line(f_point, s_point), fdf);
-			m++;
 			free(f_point);
 			free(s_point);
 		}
 		t_x = 0;
 		t_y += fdf->offset;
-		n++;
+		fdf->n++;
 	}
 }
 
@@ -119,24 +119,26 @@ void draw_vertical(t_fdf *fdf)
 {
 	int t_x = 0;
 	int t_y = 0;
-	int n;
-	int m = 0;
+	fdf->m = 0;
 	t_point *f_point;
 	t_point *s_point;
-	while (m != fdf->chars)
+	while (fdf->m != fdf->chars)
 	{
-		n = 0;
-		while (n != fdf->lines - 1)
+		fdf->n = 0;
+		while (fdf->n != fdf->lines - 1)
 		{
-			f_point = get_point(t_x, t_y, fdf->map[n][m], fdf);
+			f_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
 			t_y += fdf->offset;
-			s_point = get_point(t_x, t_y, fdf->map[n + 1][m], fdf);
+			fdf->n++;
+			s_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
 			put_line(get_t_line(f_point, s_point), fdf);
-			n++;
+		//	fdf->n++;
+			free(f_point);
+			free(s_point);
 		}
 		t_y = 0;
 		t_x += fdf->offset;
-		m++;
+		fdf->m++;
 	}
 }
 
