@@ -64,6 +64,7 @@ int tab_make(t_fdf *fdf)
 	if (ft_put_sizes(fdf) == -1)
 		return (-1);
 	fdf->map = (int **)ft_memalloc(sizeof(int *) * fdf->lines);
+	fdf->color = (int **)ft_memalloc(sizeof(int *) * fdf->lines);
 	close(fdf->fd);
 	fdf->fd = open(fdf->name, O_RDONLY);
 	return (0);
@@ -83,9 +84,11 @@ int get_cords(t_fdf *fdf)
 		j = 0;
 		tab = ft_strsplit(line, ' ');
 		fdf->map[i] = ft_memalloc(sizeof(int) * fdf->chars);
+		fdf->color[i] = ft_memalloc(sizeof(int) * fdf->chars);
 		while (tab[j] != NULL)
 		{
 			fdf->map[i][j] = ft_atoi(tab[j]);
+			fdf->color[i][j] = ft_getcol(tab[j]);
 			j++;
 		}
 		ft_arrclr(tab);

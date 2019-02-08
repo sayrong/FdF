@@ -59,7 +59,7 @@ typedef struct		s_fdf
 	int				**map;
 	int				lines;
 	int				chars;
-	unsigned long	color;
+	int         	**color;
     int				offset;
 	int				xZ;
 	int				pad_X;
@@ -85,5 +85,6 @@ void draw_init(t_fdf *fdf);
 int win_close(void *param);
 void	draw_background(t_fdf *fdf);
 t_point *get_simple_point(int x, int y, int z);
-
+int	ft_getcol(char *str);
+int				ft_atoi_base(const char *str, int base);
 #endif

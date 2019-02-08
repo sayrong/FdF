@@ -16,10 +16,10 @@ void ft_init(t_fdf *fdf)
 		ft_putendl("Error");
 		return ;
 	}
-//	ft_printer(fdf);
+	ft_printer(fdf);
 }
 
-/* void ft_printer(t_fdf *fdf)
+void ft_printer(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -30,13 +30,14 @@ void ft_init(t_fdf *fdf)
 		j = 0;
 		while(j < fdf->chars)
 		{
-			printf("%d ", fdf->map[i][j]);
+			printf("%d-", fdf->map[i][j]);
+			printf("%d ", fdf->color[i][j]);
 			j++;
 		}
 		printf("\n");
 		i++;
 	}
-} */
+}
 
 int	main(int ac, char *av[])
 {

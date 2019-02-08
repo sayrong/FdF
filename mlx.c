@@ -132,7 +132,6 @@ void draw_vertical(t_fdf *fdf)
 			fdf->n++;
 			s_point = get_point(t_x, t_y, fdf->map[fdf->n][fdf->m], fdf);
 			put_line(get_t_line(f_point, s_point), fdf);
-		//	fdf->n++;
 			free(f_point);
 			free(s_point);
 		}
