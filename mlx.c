@@ -59,12 +59,16 @@ void	rotate_z(int *x, int *y, double c)
 
 t_point *get_simple_point(int x, int y, int z)
 {
-    t_point *new = (t_point*)malloc(sizeof(t_point));
-    new->x = x;
-    new->y= y;
-    new->z = z;
-    new->color = define_color(z);
-    return new;
+	t_point *new;
+	
+	if ((new = (t_point*)malloc(sizeof(t_point))))
+	{
+		new->x = x;
+		new->y= y;
+		new->z = z;
+		new->color = define_color(z);
+	}
+	return new;
 }
 
 t_point *get_point(int x, int y, t_fdf *fdf)
@@ -76,7 +80,7 @@ t_point *get_point(int x, int y, t_fdf *fdf)
 	rotate_x(&new->y, &new->z, fdf->a);
 	rotate_y(&new->x, &new->z, fdf->b);
 	rotate_z(&new->x, &new->y, fdf->c);
-    if (!(fdf->color[fdf->n][fdf->m]))
+	if (!(fdf->color[fdf->n][fdf->m]))
 		new->color = define_color(fdf->map[fdf->n][fdf->m]);
 	else
 		new->color = fdf->color[fdf->n][fdf->m];
@@ -86,13 +90,17 @@ t_point *get_point(int x, int y, t_fdf *fdf)
 
 t_line *get_t_line(t_point *f, t_point *s)
 {
-	t_line *new = (t_line *)malloc(sizeof(t_line));
-    new->start = f;
-    new->end = s;
+	t_line *new;
+	
+	if ((new = (t_line *)malloc(sizeof(t_line))))
+	{
+		new->start = f;
+		new->end = s;
+	}
 	return new;
 }
 
-void draw_horizontal(t_fdf *fdf)
+int draw_horizontal(t_fdf *fdf)
 {
 	int t_x = 0;
 	int t_y = 0;
@@ -108,7 +116,8 @@ void draw_horizontal(t_fdf *fdf)
 			t_x += fdf->offset;
 			fdf->m++;
 			s_point = get_point(t_x, t_y, fdf);
-			put_line(get_t_line(f_point, s_point), fdf);
+			if ((put_line(get_t_line(f_point, s_point), fdf)))
+				return (1);
 			free(f_point);
 			free(s_point);
 		}
@@ -116,9 +125,10 @@ void draw_horizontal(t_fdf *fdf)
 		t_y += fdf->offset;
 		fdf->n++;
 	}
+	return (0);
 }
 
-void draw_vertical(t_fdf *fdf)
+int draw_vertical(t_fdf *fdf)
 {
 	int t_x = 0;
 	int t_y = 0;
@@ -134,7 +144,8 @@ void draw_vertical(t_fdf *fdf)
 			t_y += fdf->offset;
 			fdf->n++;
 			s_point = get_point(t_x, t_y, fdf);
-			put_line(get_t_line(f_point, s_point), fdf);
+			if ((put_line(get_t_line(f_point, s_point), fdf)))
+				return (1);
 			free(f_point);
 			free(s_point);
 		}
@@ -142,33 +153,31 @@ void draw_vertical(t_fdf *fdf)
 		t_x += fdf->offset;
 		fdf->m++;
 	}
-}
-
-
-int win_close(void *param)
-{
-	(void)param;
-	exit(0);
 	return (0);
 }
 
-void setup_mlx(t_fdf *fdf)
+
+int setup_mlx(t_fdf *fdf)
 {
 	fdf->mlx = mlx_init();
 	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HEIGHT, "A simple example");
-	draw_init(fdf);
-	mlx_hook(fdf->win, 17, (1L << 17), win_close, fdf);
+	if ((draw_init(fdf)))
+		return (1);
 	mlx_hook(fdf->win, 2, 5, key_press, fdf);
 	mlx_loop(fdf->mlx);
+	return (0);
 }
 
-void draw_init(t_fdf *fdf)
+int draw_init(t_fdf *fdf)
 {
 	fdf->img.img_ptr = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
-	fdf->img.data = (int *)mlx_get_data_addr(fdf->img.img_ptr, &(fdf->img.bpp), &(fdf->img.size_l), &(fdf->img.endian));
+	fdf->img.data = (int *)mlx_get_data_addr(fdf->img.img_ptr, &(fdf->img.bpp),
+											 &(fdf->img.size_l), &(fdf->img.endian));
 
-	draw_horizontal(fdf);
-	draw_vertical(fdf);
-
+	if ((draw_horizontal(fdf)))
+		return (1);
+	if ((draw_vertical(fdf)))
+		return (1);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img_ptr, 0, 0);
+	return (0);
 }

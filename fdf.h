@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "./minilibx/mlx.h"
+#include "mlx.h"
 #include <stdlib.h>
 #include "./libft/libft.h"
 #include "./libft/get_next_line.h"
@@ -79,12 +79,13 @@ int tab_make(t_fdf *fdf);
 int get_cords(t_fdf *fdf);
 int tab_filler(t_fdf *fdf);
 int key_press(int key, t_fdf *fdf);
-void put_line(t_line *l, t_fdf  *fdf);
-void setup_mlx(t_fdf *fdf);
-void draw_init(t_fdf *fdf);
+int put_line(t_line *l, t_fdf  *fdf);
+int setup_mlx(t_fdf *fdf);
+int draw_init(t_fdf *fdf);
 int win_close(void *param);
 void	draw_background(t_fdf *fdf);
 t_point *get_simple_point(int x, int y, int z);
 int	ft_getcol(char *str);
 int				ft_atoi_base(const char *str, int base);
+void free_map_color(t_fdf *fdf);
 #endif

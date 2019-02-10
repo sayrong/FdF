@@ -1,8 +1,8 @@
-#include "./minilibx/mlx.h"
+#include "mlx.h"
 #include "fdf.h"
 #include <stdlib.h>
 
-void ft_init(t_fdf *fdf)
+int ft_init(t_fdf *fdf)
 {
 	fdf->xZ = 3;
 	fdf->a = 0;
@@ -11,9 +11,9 @@ void ft_init(t_fdf *fdf)
 	if (tab_filler(fdf) == -1)
 	{
 		ft_putendl("Error");
-		return ;
+		return (-1);
 	}
-//	ft_printer(fdf);
+	return (0);
 }
 
 /* void ft_printer(t_fdf *fdf)
@@ -41,11 +41,19 @@ int	main(int ac, char *av[])
 	t_fdf fdf;
 
 	if (ac != 2)
+	{
 		ft_putendl("usage: fdf \"name of file\"\n");
-	if (!(fdf.fd = open(av[1], O_RDONLY)))
-		ft_putendl("error\n");
+		return (1);
+	}
+	if (((fdf.fd = open(av[1], O_RDONLY)) == - 1))
+	{
+		ft_putendl("error fd\n");
+		return (1);
+	}
 	fdf.name = av[1];
-	ft_init(&fdf);
-    setup_mlx(&fdf);
+	if (ft_init(&fdf))
+		return (1);
+    if ((setup_mlx(&fdf)))
+		free_map_color(&fdf);
 	return (0);
 }

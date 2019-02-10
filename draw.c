@@ -50,6 +50,7 @@ int get_color(t_point *current, t_point *start, t_point *end)
     red = get_light((start->color >> 16) & 0xFF, (end->color >> 16) & 0xFF, percentage);
     green = get_light((start->color >> 8) & 0xFF, (end->color >> 8) & 0xFF, percentage);
     blue = get_light(start->color & 0xFF, end->color & 0xFF, percentage);
+	free(current);
     return ((red << 16) | (green << 8) | blue);
 }
 
@@ -60,9 +61,10 @@ void swap_points(t_line *l)
     ft_swap(&(l->start->color), &(l->end->color));
 }
 
-void put_line_low(t_line *l, t_fdf  *fdf)
+int put_line_low(t_line *l, t_fdf  *fdf)
 {
     t_delta new;
+	t_point *point;
     int yi;
 
     new.dx = l->end->x - l->start->x;
@@ -78,8 +80,10 @@ void put_line_low(t_line *l, t_fdf  *fdf)
     new.y = l->start->y;
     while (new.x <= l->end->x)
     {
+		if (!(point = get_simple_point(new.x, new.y, 0)))
+			return (1);
         if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0 && new.y > 0)
-			fdf->img.data[new.y * WIN_WIDTH + new.x] = get_color(get_simple_point(new.x, new.y, 0), l->start, l->end);
+			fdf->img.data[new.y * WIN_WIDTH + new.x] = get_color(point, l->start, l->end);
         if (new.D > 0)
         {
             new.y += yi;
@@ -88,11 +92,14 @@ void put_line_low(t_line *l, t_fdf  *fdf)
         new.D += 2 * new.dy;
         new.x++;
     }
+	free(l);
+	return (0);
 }
 
-void put_line_high(t_line *l, t_fdf  *fdf)
+int put_line_high(t_line *l, t_fdf  *fdf)
 {
     t_delta new;
+	t_point *point;
     int xi;
 
     new.dx = l->end->x - l->start->x;
@@ -108,8 +115,10 @@ void put_line_high(t_line *l, t_fdf  *fdf)
     new.y = l->start->y;
     while (new.y <= l->end->y)
     {
+		if (!(point = get_simple_point(new.x, new.y, 0)))
+			return (1);
 		if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0  && new.y > 0)
-        	fdf->img.data[new.y * WIN_WIDTH + new.x] = get_color(get_simple_point(new.x, new.y, 0), l->start, l->end);
+        	fdf->img.data[new.y * WIN_WIDTH + new.x] = get_color(point, l->start, l->end);
         if (new.D > 0)
         {
             new.x += xi;
@@ -118,20 +127,23 @@ void put_line_high(t_line *l, t_fdf  *fdf)
         new.D += 2 * new.dx;
         new.y++;
     }
+	free(l);
+	return (0);
 }
 
 
-void put_line(t_line *l, t_fdf  *fdf)
+int put_line(t_line *l, t_fdf  *fdf)
 {
+	if (l == NULL)
+		return (1);
     if (ft_abs(l->end->y - l->start->y) < ft_abs(l->end->x - l->start->x))
     {
         if (l->start->x > l->end->x)
             swap_points(l);
-        put_line_low(l, fdf);
+        return (put_line_low(l, fdf));
     } else {
         if (l->start->y > l->end->y)
             swap_points(l);
-        put_line_high(l, fdf);
+        return (put_line_high(l, fdf));
     }
-
 }

@@ -2,6 +2,7 @@
 # define KEYB_LINUX_H
 // вместо linux key
 
+/*
 # define KB_ESC						0xff1b
 # define KB_UP						65362	//126
 # define KB_DOWN					65364	//125
@@ -18,9 +19,9 @@
 # define KB_H						104
 # define KB_X						120
 # define KB_Z						122
+*/
 
 
-/*
 //Mac
 # define KB_ESC						53
 # define KB_UP						125
@@ -38,6 +39,6 @@
 # define KB_H						18 // 1
 # define KB_X						19 // 2
 # define KB_Z						20 // 3
-*/
+
 
 # endif

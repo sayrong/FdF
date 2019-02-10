@@ -61,10 +61,12 @@ int ft_put_sizes(t_fdf *fdf)
 
 int tab_make(t_fdf *fdf)
 {
-	if (ft_put_sizes(fdf) == -1)
+	if (ft_put_sizes(fdf) == 1)
 		return (-1);
-	fdf->map = (int **)ft_memalloc(sizeof(int *) * fdf->lines);
-	fdf->color = (int **)ft_memalloc(sizeof(int *) * fdf->lines);
+	if (!(fdf->map = (int **)ft_memalloc(sizeof(int *) * fdf->lines)))
+		return (-1);
+	if (!(fdf->color = (int **)ft_memalloc(sizeof(int *) * fdf->lines)))
+		return (-1);
 	close(fdf->fd);
 	fdf->fd = open(fdf->name, O_RDONLY);
 	return (0);
@@ -83,8 +85,10 @@ int get_cords(t_fdf *fdf)
 	{
 		j = 0;
 		tab = ft_strsplit(line, ' ');
-		fdf->map[i] = ft_memalloc(sizeof(int) * fdf->chars);
-		fdf->color[i] = ft_memalloc(sizeof(int) * fdf->chars);
+		if (!(fdf->map[i] = ft_memalloc(sizeof(int) * fdf->chars)))
+			return (-1);
+		if (!(fdf->color[i] = ft_memalloc(sizeof(int) * fdf->chars)))
+			return (-1);
 		while (tab[j] != NULL)
 		{
 			fdf->map[i][j] = ft_atoi(tab[j]);
@@ -95,6 +99,21 @@ int get_cords(t_fdf *fdf)
 		i++;
 	}
 	return (0);
+}
+
+void free_map_color(t_fdf *fdf)
+{
+	int i;
+	
+	i = 0;
+	while (i < fdf->lines)
+	{
+		free(fdf->map[i]);
+		free(fdf->color[i]);
+		i++;
+	}
+	free(fdf->map);
+	free(fdf->color);
 }
 
 int tab_filler(t_fdf *fdf)

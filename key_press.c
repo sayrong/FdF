@@ -81,16 +81,25 @@ int start_pos(int key, t_fdf *fdf)
 	return (0);
 }
 
+void finish(t_fdf *fdf)
+{
+	mlx_destroy_image(fdf->mlx, fdf->img.img_ptr);
+	mlx_destroy_window(fdf->mlx, fdf->win);
+	free_map_color(fdf);
+	exit(0);
+}
+
 int key_press(int key, t_fdf *fdf)
 {
 	if (key == KB_ESC)
-		exit(0);
+		finish(fdf);
 	zoom(key, fdf);
 	high_z(key, fdf);
 	moving(key, fdf);
 	rotate(key, fdf);
 	start_pos(key, fdf);
 	mlx_destroy_image(fdf->mlx, fdf->img.img_ptr);
-	draw_init(fdf);
+	if ((draw_init(fdf)))
+		finish(fdf);
 	return (0);
 }
