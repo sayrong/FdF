@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_press.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: balvyn-s <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/10 22:27:26 by balvyn-s          #+#    #+#             */
+/*   Updated: 2019/02/10 22:29:04 by balvyn-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int zoom(int key, t_fdf *fdf)
+int		zoom(int key, t_fdf *fdf)
 {
 	if (key == KB_W)
 	{
 		if (fdf->offset < 50)
 		{
 			fdf->offset += OFFSET;
-			if (fdf->xZ <= 10 && fdf->xZ != 0)
-				fdf->xZ += ZZZ;
+			if (fdf->x_z <= 10 && fdf->x_z != 0)
+				fdf->x_z += ZZZ;
 		}
 	}
 	else if (key == KB_S)
@@ -16,41 +28,42 @@ int zoom(int key, t_fdf *fdf)
 		if (fdf->offset > 5)
 		{
 			fdf->offset -= OFFSET;
-			if (fdf->xZ >= 2)
-				fdf->xZ -= ZZZ;
+			if (fdf->x_z >= 2)
+				fdf->x_z -= ZZZ;
 		}
 	}
 	return (0);
 }
 
-int high_z(int key, t_fdf *fdf)
+int		high_z(int key, t_fdf *fdf)
 {
 	if (key == KB_X)
 	{
-		if (fdf->xZ < 10)
-			fdf->xZ += ZZZ;
+		if (fdf->x_z < 10)
+			fdf->x_z += ZZZ;
 	}
 	else if (key == KB_Z)
 	{
-		if (fdf->xZ >= 1)
-			fdf->xZ -= ZZZ;
+		if (fdf->x_z >= 1)
+			fdf->x_z -= ZZZ;
 	}
 	return (0);
 }
-int moving(int key, t_fdf *fdf)
+
+int		moving(int key, t_fdf *fdf)
 {
 	if (key == KB_UP)
-		fdf->pad_Y += PADDING;
+		fdf->pad_y += PADDING;
 	else if (key == KB_DOWN)
-		fdf->pad_Y -= PADDING;
+		fdf->pad_y -= PADDING;
 	else if (key == KB_LEFT)
-		fdf->pad_X += PADDING;
+		fdf->pad_x += PADDING;
 	else if (key == KB_RIGHT)
-		fdf->pad_X -= PADDING;
+		fdf->pad_x -= PADDING;
 	return (0);
 }
 
-void rotate(int key, t_fdf *fdf)
+void	rotate(int key, t_fdf *fdf)
 {
 	if (key == KP_2)
 		fdf->a += 0.05;
@@ -66,30 +79,7 @@ void rotate(int key, t_fdf *fdf)
 		fdf->c -= 0.05;
 }
 
-int start_pos(int key, t_fdf *fdf)
-{
-	if (key == KB_H)
-	{
-		fdf->offset = WIN_HEIGHT / (2 * fdf->lines) + 2;
-		fdf->pad_X = WIN_WIDTH / 2;
-		fdf->pad_Y = WIN_HEIGHT / 6;
-		fdf->xZ = 3;
-		fdf->a = 0;
-		fdf->b = 0;
-		fdf->c = 0;
-	}
-	return (0);
-}
-
-void finish(t_fdf *fdf)
-{
-	mlx_destroy_image(fdf->mlx, fdf->img.img_ptr);
-	mlx_destroy_window(fdf->mlx, fdf->win);
-	free_map_color(fdf);
-	exit(0);
-}
-
-int key_press(int key, t_fdf *fdf)
+int		key_press(int key, t_fdf *fdf)
 {
 	if (key == KB_ESC)
 		finish(fdf);

@@ -54,14 +54,14 @@ int ft_put_sizes(t_fdf *fdf)
 			return (-1);
 	}
 	fdf->offset = WIN_HEIGHT / (2 * fdf->lines) + 2;
-	fdf->pad_X = WIN_WIDTH / 2;
-	fdf->pad_Y = WIN_HEIGHT / 6;
+	fdf->pad_x = WIN_WIDTH / 2;
+	fdf->pad_y = WIN_HEIGHT / 6;
 	return (0);
 }
 
 int tab_make(t_fdf *fdf)
 {
-	if (ft_put_sizes(fdf) == 1)
+	if (ft_put_sizes(fdf) == -1)
 		return (-1);
 	if (!(fdf->map = (int **)ft_memalloc(sizeof(int *) * fdf->lines)))
 		return (-1);

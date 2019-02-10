@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: balvyn-s <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/10 21:34:47 by balvyn-s          #+#    #+#             */
+/*   Updated: 2019/02/10 22:13:22 by balvyn-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include "libft/libft.h"
 
-int is_blank(char c)
+int		is_blank(char c)
 {
 	if (c <= 32)
 		return (1);
@@ -10,9 +22,11 @@ int is_blank(char c)
 
 int		isvalid(char c, int base)
 {
-	char digits[17] = "0123456789abcdef";
-	char digits2[17] = "0123456789ABCDEF";
+	char *digits;
+	char *digits2;
 
+	digits = "0123456789abcdef";
+	digits2 = "0123456789ABCDEF";
 	while (base--)
 		if (digits[base] == c || digits2[base] == c)
 			return (1);
@@ -45,7 +59,7 @@ int		ft_atoi_base(const char *str, int str_base)
 	return (result * sign);
 }
 
-int	ft_getcol(char *str)
+int		ft_getcol(char *str)
 {
 	int	i;
 	int result;

@@ -4,7 +4,7 @@
 
 int ft_init(t_fdf *fdf)
 {
-	fdf->xZ = 3;
+	fdf->x_z = 3;
 	fdf->a = 0;
 	fdf->b = 0;
 	fdf->c = 0;
