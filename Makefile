@@ -1,6 +1,8 @@
 NAME = fdf
 
-SRC = color_gradient.c colors.c draw.c helper_first.c helper_second.c key_press.c main.c mlx.c new_life.c rotations.c
+SRC = ./src/color_gradient.c ./src/colors.c ./src/draw.c \
+./src/tab_maker.c ./src/tab_reading.c ./src/key_press.c ./src/main.c \
+./src/mlx.c ./src/rotations.c ./src/start_finish.c ./src/get_point.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -9,7 +11,8 @@ FLAGS = -Wall -Wextra -Werror -g
 
 MLX = ./minilibx_macos/
 MLX_LNK = -L ./minilibx_macos -l mlx -framework OpenGL -framework AppKit
-
+FLAGS2 = -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
+FLAGS3 = /usr/local/lib/libmlx.a /usr/local/include/mlx.h -lXext -lX11 -lm
 FT = ./libft/
 FT_LNK = -L ./libft -lft
 
@@ -20,13 +23,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(FT)
-	make -C $(MLX)
-	$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME)
+	$(CC) $(OBJ) $(FLAGS2) $(FT_LNK) -lm -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
 	make -C $(FT) clean
-	make -C $(MLX) clean
 
 fclean: clean
 	rm -f $(NAME)
