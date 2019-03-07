@@ -24,8 +24,8 @@
 # include <math.h>
 # include "keys.h"
 # define WIN_WIDTH 1200
-# define WIN_HEIGHT 1200
-# define PADDING 20
+# define WIN_HEIGHT 1000
+# define PADDING 10
 # define OFFSET 5
 # define ZZZ 1
 
@@ -82,7 +82,9 @@ typedef struct		s_fdf
 	double			c;
 	int				t_x;
 	int				t_y;
+	int				menu;
 	t_img			img;
+	int				col_code;
 }					t_fdf;
 
 int					ft_abs(int a);
@@ -100,7 +102,7 @@ int					setup_mlx(t_fdf *fdf);
 int					draw_init(t_fdf *fdf);
 int					win_close(void *param);
 void				draw_background(t_fdf *fdf);
-t_point				*get_simple_point(int x, int y, int z);
+t_point				*get_simple_point(int x, int y, int z, t_fdf *fdf);
 int					ft_getcol(char *str);
 void				free_map_color(t_fdf *fdf);
 int					get_color(t_point *current, t_point *start, t_point *end);
@@ -109,9 +111,10 @@ int					start_pos(int key, t_fdf *fdf);
 t_point				*get_point(int x, int y, t_fdf *fdf);
 void				iso(int *x, int *y, int z, t_fdf *fdf);
 t_line				*get_t_line(t_point *f, t_point *s);
-void				rotate_x(int *y, int *z, double a);
-void				rotate_y(int *x, int *z, double b);
-void				rotate_z(int *x, int *y, double c);
+void				rotate_x(int *y, int *z, double a, t_fdf *fdf);
+void				rotate_y(int *x, int *z, double b, t_fdf *fdf);
+void				rotate_z(int *x, int *y, double c, t_fdf *fdf);
 int					finish(t_fdf *fdf);
+void				menu_init(t_fdf *fdf);
 
 #endif

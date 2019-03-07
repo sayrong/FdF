@@ -26,7 +26,7 @@ int	ft_put_sizes(t_fdf *fdf)
 			return (-1);
 	}
 	fdf->offset = WIN_HEIGHT / (2 * fdf->lines) + 2;
-	fdf->pad_x = WIN_WIDTH / 2;
+	fdf->pad_x = WIN_WIDTH / (fdf->lines / 2) + fdf->offset * fdf->lines;
 	fdf->pad_y = WIN_HEIGHT / 6;
 	return (0);
 }

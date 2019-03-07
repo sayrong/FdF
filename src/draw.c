@@ -36,7 +36,7 @@ int		put_line_low(t_line *l, t_fdf *fdf)
 	init_low(&new, &yi, l);
 	while (new.x <= l->end->x)
 	{
-		if (!(point = get_simple_point(new.x, new.y, 0)))
+		if (!(point = get_simple_point(new.x, new.y, 0, fdf)))
 			return (1);
 		if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0 && new.y > 0)
 			fdf->img.data[new.y * WIN_WIDTH + new.x] =
@@ -48,6 +48,7 @@ int		put_line_low(t_line *l, t_fdf *fdf)
 		}
 		new.d += 2 * new.dy;
 		new.x++;
+		free(point);
 	}
 	free(l);
 	return (0);
@@ -77,7 +78,7 @@ int		put_line_high(t_line *l, t_fdf *fdf)
 	init_high(&new, &xi, l);
 	while (new.y <= l->end->y)
 	{
-		if (!(point = get_simple_point(new.x, new.y, 0)))
+		if (!(point = get_simple_point(new.x, new.y, 0, fdf)))
 			return (1);
 		if (new.x < WIN_WIDTH && new.y < WIN_HEIGHT && new.x > 0 && new.y > 0)
 			fdf->img.data[new.y * WIN_WIDTH + new.x] =
@@ -89,6 +90,7 @@ int		put_line_high(t_line *l, t_fdf *fdf)
 		}
 		new.d += 2 * new.dx;
 		new.y++;
+		free(point);
 	}
 	free(l);
 	return (0);

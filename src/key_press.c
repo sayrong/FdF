@@ -6,7 +6,7 @@
 /*   By: balvyn-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 22:27:26 by balvyn-s          #+#    #+#             */
-/*   Updated: 2019/02/10 22:29:04 by balvyn-s         ###   ########.fr       */
+/*   Updated: 2019/02/14 13:28:23 by jfrankly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@ int		zoom(int key, t_fdf *fdf)
 
 int		high_z(int key, t_fdf *fdf)
 {
-	if (key == KB_2)
+	if (key == KB_1)
 	{
 		if (fdf->x_z < 10)
 			fdf->x_z += ZZZ;
 	}
-	else if (key == KB_3)
+	else if (key == KB_2)
 	{
 		if (fdf->x_z >= 1)
 			fdf->x_z -= ZZZ;
 	}
+	else if (key == KB_5)
+		fdf->menu = (fdf->menu == 0) ? 1 : 0;
+	else if (key == KB_4)
+		fdf->col_code += (fdf->col_code == 4) ? -4 : 1;
 	return (0);
 }
 

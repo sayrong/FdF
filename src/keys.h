@@ -26,8 +26,10 @@
 # define KB_U						7
 # define KB_PLS						24
 # define KB_MIN						27
-# define KB_H						18
+# define KB_1						18
 # define KB_2						19
 # define KB_3						20
+# define KB_4						21
+# define KB_5						23
 
 #endif

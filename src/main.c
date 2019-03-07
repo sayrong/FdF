@@ -16,10 +16,12 @@
 
 int	ft_init(t_fdf *fdf)
 {
-	fdf->x_z = 3;
+	fdf->x_z = 10;
 	fdf->a = 0;
 	fdf->b = 0;
 	fdf->c = 0;
+	fdf->menu = 0;
+	fdf->col_code = 0;
 	if (tab_filler(fdf) == -1)
 	{
 		ft_putendl("Error");
@@ -47,5 +49,6 @@ int	main(int ac, char *av[])
 		return (1);
 	if ((setup_mlx(&fdf)))
 		free_map_color(&fdf);
+	write(1, "a", 1);
 	return (0);
 }

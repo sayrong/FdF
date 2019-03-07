@@ -104,5 +104,6 @@ int		draw_init(t_fdf *fdf)
 	if ((draw_vertical(fdf)))
 		return (1);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img_ptr, 0, 0);
+	menu_init(fdf);
 	return (0);
 }

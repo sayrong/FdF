@@ -23,7 +23,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(FT)
-	$(CC) $(OBJ) $(FLAGS2) $(FT_LNK) -lm -o $(NAME)
+	$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
